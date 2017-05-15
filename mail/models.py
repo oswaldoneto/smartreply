@@ -5,9 +5,11 @@ from exchange.models import EmailServer
 
 class Message(models.Model):
     NEW = '1'
-    TREATED = '2'
+    PROCESSING = '2'
+    TREATED = '3'
     STATE = (
         (NEW, 'NEW'),
+        (PROCESSING, 'PROCESSING'),
         (TREATED, 'TREATED'),
     )
     server = models.ForeignKey(EmailServer)

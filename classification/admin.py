@@ -1,3 +1,17 @@
 from django.contrib import admin
 
-# Register your models here.
+from classification.models import Classification, Property
+
+
+class PropertyInlineAdmin(admin.TabularInline):
+    model = Property
+
+
+@admin.register(Classification)
+class ClassificationAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    inlines = [PropertyInlineAdmin]
+
+
+
+

@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'mail',
     'exchange',
     'classification',
-    'learning',
+    'ml',
 ]
 
 MIDDLEWARE = [
