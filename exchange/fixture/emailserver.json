@@ -1,0 +1,22 @@
+[
+{
+  "model": "exchange.emailserver",
+  "pk": 1,
+  "fields": {
+    "host": "imap.gmail.com",
+    "user": "poc.febracorp@gmail.com",
+    "password": "z1on0101",
+    "active": true
+  }
+},
+{
+  "model": "exchange.emailserver",
+  "pk": 2,
+  "fields": {
+    "host": "imap.gmail.com",
+    "user": "cedimvet@flowify.com.br",
+    "password": "z1on0101",
+    "active": false
+  }
+}
+]

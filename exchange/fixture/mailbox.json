@@ -1,0 +1,20 @@
+[
+{
+  "model": "exchange.mailbox",
+  "pk": 1,
+  "fields": {
+    "mailbox": "inbox",
+    "server": 1,
+    "active": true
+  }
+},
+{
+  "model": "exchange.mailbox",
+  "pk": 2,
+  "fields": {
+    "mailbox": "inbox",
+    "server": 2,
+    "active": true
+  }
+}
+]
