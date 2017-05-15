@@ -1,16 +1,18 @@
 import json
 
-from bs4 import BeautifulSoup
 from django.http.response import HttpResponse
-from django.views.generic.base import View
+from django.views.generic.base import View, TemplateView
 from sklearn.ensemble.forest import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer
-import numpy as np
 
-from mail.models import Message
+
+class StatusView(TemplateView):
+    template_name = 'status.html'
 
 
 class RunView(View):
+
+
 
     def get(self, request, *args, **kwargs):
 

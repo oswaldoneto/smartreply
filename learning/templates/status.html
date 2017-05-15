@@ -1,0 +1,337 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartReply</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <!-- Semantic UI Imports -->
+    <link rel="stylesheet" type="text/css" href="{% static 'semantic.min.css' %}">
+    <script src="{% static 'semantic.min.js' %}"></script>
+
+</head>
+<body>
+<div class="ui text container">
+
+
+    <div class="ui fixed inverted blue massive pointing menu">
+        <a class="header item">
+            Machine Learning Status
+        </a>
+        <div class="right inverted menu">
+            <div class="item">
+                <div class="ui toggle inverted checkbox">
+                    <input type="checkbox" name="public">
+                    <label></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <div class="ui large header">Learning Steps</div>
+    <div class="ui fluid steps">
+        <div class="step">
+            <i class="upload icon"></i>
+            <div class="content">
+                <div class="title">Upload DataSet</div>
+                <div class="description">Learn from data</div>
+            </div>
+        </div>
+        <div class="step">
+            <i class="student icon"></i>
+            <div class="content">
+                <div class="title">Training</div>
+                <div class="description">Evaluate ML Model</div>
+            </div>
+        </div>
+        <div class="step">
+            <i class="umbrella icon"></i>
+            <div class="content">
+                <div class="title">Prediction</div>
+                <div class="description">Create and Submit</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="ui grid">
+
+
+        <div class="eight wide column">
+
+
+            <!--
+                Summary
+            -->
+            <div class="eight wide column">
+                <div class="ui big header">Summary</div>
+                <div class="ui segment">
+
+                    <h4 class="ui header">
+                        Model
+                        <div class="sub header">ML Model Reclame Aqui</div>
+                    </h4>
+
+                    <h4 class="ui header">
+                        Type
+                        <div class="sub header">Binary Classification</div>
+                    </h4>
+
+                    <h4 class="ui header">
+                        Create At
+                        <div class="sub header">May 1, 2017 9:31:05 PM</div>
+                    </h4>
+
+                    <h4 class="ui header">
+                        Compute Time (Aproximate)
+                        <div class="sub header">1 minute</div>
+                    </h4>
+
+                </div>
+            </div>
+
+
+
+
+            <!--
+                DataSet
+            -->
+            <br>
+            <div class="ui big header">Data Set</div>
+            <div class="ui segment">
+
+                <h4 class="ui header">
+                    Training Data
+                    <div class="sub header">/root/dataset/train_data.json</div>
+                </h4>
+                <div class="ui center aligned basic segment">
+
+                    <div class="ui mini statistic">
+                        <div class="value">
+                            50000
+                        </div>
+                        <div class="label">
+                            Rows
+                        </div>
+                    </div>
+                    <div class="ui mini statistic">
+                        <div class="value">
+                            2
+                        </div>
+                        <div class="label">
+                            Columns
+                        </div>
+                    </div>
+                    <div class="ui mini statistic">
+                        <div class="value">
+                            64
+                        </div>
+                        <div class="label">
+                            MBytes
+                        </div>
+                    </div>
+                </div>
+                <div class="ui center aligned basic segment">
+                    <button class="ui primary button">Upload Training Data</button>
+                </div>
+
+
+                <div class="ui divider"></div>
+                <h4 class="ui header">
+                    Test Data
+                    <div class="sub header">/root/dataset/test_data.json</div>
+                </h4>
+
+                <div class="ui center aligned basic segment">
+                    <div class="ui mini statistic">
+                        <div class="value">
+                            25000
+                        </div>
+                        <div class="label">
+                            Rows
+                        </div>
+                    </div>
+                    <div class="ui mini statistic">
+                        <div class="value">
+                            1
+                        </div>
+                        <div class="label">
+                            Columns
+                        </div>
+                    </div>
+                    <div class="ui mini statistic">
+                        <div class="value">
+                            32
+                        </div>
+                        <div class="label">
+                            MBytes
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui center aligned basic segment">
+                    <button class="ui primary button">Upload Test Data</button>
+                </div>
+
+
+                <div class="ui divider"></div>
+
+
+                <h4 class="ui header">
+                    Classificação
+                </h4>
+                <div class="ui blue labels">
+                    <a class="ui label">
+                        Fun <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Login-Senha <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Cobrança indevida <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Atraso na entrega <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Mau atendimento do prestador de serviço <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Mau Atendimento <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Valor abusivo <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Rematrícula <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Qualidade do serviço prestado <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Demora na execução <i class="icon close"></i>
+                    </a>
+                    <a class="ui label">
+                        Estorno do valor pago <i class="icon close"></i>
+                    </a>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!--
+            Training ML Model - Segment
+        -->
+        <div class="eight wide column">
+            <div class="ui big header">Training ML Model</div>
+            <div class="ui segment">
+                <div class="ui positive message">
+                    <i class="close icon"></i>
+                    On your most recent evaluation the ML model's quality score is considered <b>extremely good</b> for
+                    most
+                    machine learning applications.
+                </div>
+                <div id="ui-accuracy-bar" class="ui green progress">
+                    <div class="bar">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="label">AUC</div>
+                </div>
+                <div class="ui center aligned basic segment">
+                    <div class="ui mini green statistic">
+                        <div class="value">
+                            0.91
+                        </div>
+                        <div class="label">
+                            Accuracy
+                        </div>
+                    </div>
+                    <div class="ui mini statistic">
+                        <div class="value">
+                            0.78
+                        </div>
+                        <div class="label">
+                            Score threshold
+                        </div>
+                    </div>
+                </div>
+                <div class="ui center aligned basic segment">
+                    <button class="ui positive button">Perform Evaluation</button>
+                </div>
+            </div>
+
+            <br>
+
+            <!--
+                Predictions
+            -->
+            <div class="eight wide column">
+                <div class="ui big header">Predictions</div>
+                <div class="ui segment">
+                    <div class="ui center aligned basic segment">
+                        <div class="ui mini statistic">
+                            <div class="value">
+                                0.78
+                            </div>
+                            <div class="label">
+                                Score threshold
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="ui header">
+                        Real-Time Prediction
+                        <div class="sub header">Generate real-time predictions in your browser.</div>
+                    </h4>
+                    <div class="ui center aligned basic segment">
+                        <button class="ui button">Real-Time Prediction</button>
+                    </div>
+
+                    <h4 class="ui header">
+                        Batch Prediction
+                        <div class="sub header">Generate one-time predictions for a single dataset.</div>
+                    </h4>
+                    <div class="ui center aligned basic segment">
+                        <button class="ui button">Batch Prediction</button>
+                    </div>
+
+                    <h4 class="ui header">
+                        Enable Real-Time Prediction
+                        <div class="sub header">To enable real-time predictions as service</div>
+                    </h4>
+                    <div class="ui center aligned basic segment">
+                        <button class="ui button">Enable Endpoint</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+</body>
+
+<script>
+    $(document).ready(function () {
+
+        $('#ui-accuracy-bar').progress({
+            percent: 91
+        });
+
+    });
+</script>
+
+</html>

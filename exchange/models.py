@@ -8,8 +8,8 @@ class EmailServer(models.Model):
     password = models.CharField(max_length=30)
     active = models.BooleanField()
 
-    def __unicode__(self):
-        return str(self.host)
+    def __str__(self):
+        return str('%s / %s' % (self.user, self.host))
 
 
 class MailBox(models.Model):
