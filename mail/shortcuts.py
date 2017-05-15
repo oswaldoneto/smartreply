@@ -1,8 +1,18 @@
+import ssl
+import os
 import sendgrid
 from sendgrid.helpers.mail.mail import Mail, Personalization, Email, Content
 
 
 def send():
+
+    try:
+        _create_unverified_https_context = ssl._create_unverified_context
+    except AttributeError:
+        pass
+    else:
+        ssl._create_default_https_context = _create_unverified_https_context
+
 
     def prepare_data(template_id, mail_to):
 
@@ -29,7 +39,9 @@ def send():
 
         return mail.get()
 
-    sendgrid_key = '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'
+    #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
+    sendgrid_key = os.environ['SENDGRID_API_KEY']
+
 
     try:
         sg = sendgrid.SendGridAPIClient(apikey=sendgrid_key)
