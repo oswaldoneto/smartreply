@@ -1,23 +1,22 @@
 {% load staticfiles %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>SmartReply</title>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-
     <!-- Semantic UI Imports -->
     <link rel="stylesheet" type="text/css" href="{% static 'semantic.min.css' %}">
     <script src="{% static 'semantic.min.js' %}"></script>
-
 </head>
 <body>
 <div class="ui text container">
 
 
-    <div class="ui fixed inverted blue massive pointing menu">
+    <!--
+    Main Menu
+    -->
+    <div class="ui fixed massive pointing menu">
         <a class="header item">
             Machine Learning Status
         </a>
@@ -30,9 +29,12 @@
             </div>
         </div>
     </div>
-
     <br><br>
 
+
+    <!--
+    Steps
+    -->
     <div class="ui large header">Learning Steps</div>
     <div class="ui fluid steps">
         <div class="step">
@@ -59,14 +61,15 @@
     </div>
 
 
+    <!--
+    Two Column Grid
+    -->
     <div class="ui grid">
-
-
         <div class="eight wide column">
 
 
             <!--
-                Summary
+            Summary
             -->
             <div class="eight wide column">
                 <div class="ui big header">Summary</div>
@@ -96,15 +99,16 @@
             </div>
 
 
-
-
             <!--
-                DataSet
+            DataSet
             -->
             <br>
             <div class="ui big header">Data Set</div>
             <div class="ui segment">
 
+                <!--
+                Training Data
+                -->
                 <h4 class="ui header">
                     Training Data
                     <div class="sub header">/root/dataset/train_data.json</div>
@@ -112,24 +116,24 @@
                 <div class="ui center aligned basic segment">
 
                     <div class="ui mini statistic">
-                        <div class="value">
-                            50000
+                        <div id="ui-train-data-rows-label" class="value">
+                            0
                         </div>
                         <div class="label">
                             Rows
                         </div>
                     </div>
                     <div class="ui mini statistic">
-                        <div class="value">
-                            2
+                        <div id="ui-train-data-cols-label" class="value">
+                            0
                         </div>
                         <div class="label">
                             Columns
                         </div>
                     </div>
                     <div class="ui mini statistic">
-                        <div class="value">
-                            64
+                        <div id="ui-train-data-size-label" class="value">
+                            0
                         </div>
                         <div class="label">
                             MBytes
@@ -137,127 +141,126 @@
                     </div>
                 </div>
                 <div class="ui center aligned basic segment">
-                    <button class="ui primary button">Upload Training Data</button>
+                    <button id="ui-upload-train-data-button" class="ui primary button">Upload Training Data</button>
                 </div>
 
-
+                <!--
+                Test Data
+                -->
                 <div class="ui divider"></div>
                 <h4 class="ui header">
                     Test Data
                     <div class="sub header">/root/dataset/test_data.json</div>
                 </h4>
-
                 <div class="ui center aligned basic segment">
                     <div class="ui mini statistic">
-                        <div class="value">
-                            25000
+                        <div id="ui-test-data-rows-label" class="value">
+                            0
                         </div>
                         <div class="label">
                             Rows
                         </div>
                     </div>
                     <div class="ui mini statistic">
-                        <div class="value">
-                            1
+                        <div id="ui-test-data-cols-label" class="value">
+                            0
                         </div>
                         <div class="label">
                             Columns
                         </div>
                     </div>
                     <div class="ui mini statistic">
-                        <div class="value">
-                            32
+                        <div id="ui-test-data-size-label" class="value">
+                            0
                         </div>
                         <div class="label">
                             MBytes
                         </div>
                     </div>
                 </div>
-
-                <div class="ui center aligned basic segment">
+                <div id="ui-upload-test-data-button" class="ui center aligned basic segment">
                     <button class="ui primary button">Upload Test Data</button>
                 </div>
 
-
-                <div class="ui divider"></div>
-
-
-                <h4 class="ui header">
-                    Classificação
-                </h4>
-                <div class="ui blue labels">
-                    <a class="ui label">
-                        Fun <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Login-Senha <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Cobrança indevida <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Atraso na entrega <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Mau atendimento do prestador de serviço <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Mau Atendimento <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Valor abusivo <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Rematrícula <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Qualidade do serviço prestado <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Demora na execução <i class="icon close"></i>
-                    </a>
-                    <a class="ui label">
-                        Estorno do valor pago <i class="icon close"></i>
-                    </a>
+                <!--
+                Classification
+                -->
+                <div id="ui-classification-div" style="display: none">
+                    <div class="ui divider"></div>
+                    <h4 class="ui header">
+                        Classification
+                    </h4>
+                    <div class="ui blue labels">
+                        <a class="ui label">
+                            Fun <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Login-Senha <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Cobrança indevida <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Atraso na entrega <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Mau atendimento do prestador de serviço <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Mau Atendimento <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Valor abusivo <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Rematrícula <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Qualidade do serviço prestado <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Demora na execução <i class="icon close"></i>
+                        </a>
+                        <a class="ui label">
+                            Estorno do valor pago <i class="icon close"></i>
+                        </a>
+                    </div>
                 </div>
 
-
             </div>
-
-
         </div>
 
 
         <!--
-            Training ML Model - Segment
+        Training ML Model - Segment
         -->
         <div class="eight wide column">
             <div class="ui big header">Training ML Model</div>
             <div class="ui segment">
-                <div class="ui positive message">
+                <div id="ui-evaluation-message" class="ui positive message" style="display: none">
                     <i class="close icon"></i>
                     On your most recent evaluation the ML model's quality score is considered <b>extremely good</b> for
                     most
                     machine learning applications.
                 </div>
-                <div id="ui-accuracy-bar" class="ui green progress">
+                <div id="ui-accuracy-bar" class="ui progress">
                     <div class="bar">
                         <div class="progress"></div>
                     </div>
                     <div class="label">AUC</div>
                 </div>
                 <div class="ui center aligned basic segment">
-                    <div class="ui mini green statistic">
-                        <div class="value">
-                            0.91
+                    <div id="ui-accuracy-statistic" class="ui mini statistic">
+                        <div id="ui-accuracy-label" class="value">
+                            0
                         </div>
                         <div class="label">
                             Accuracy
                         </div>
                     </div>
                     <div class="ui mini statistic">
-                        <div class="value">
-                            0.78
+                        <div id="ui-threshold-label" class="value">
+                            0
                         </div>
                         <div class="label">
                             Score threshold
@@ -265,29 +268,18 @@
                     </div>
                 </div>
                 <div class="ui center aligned basic segment">
-                    <button class="ui positive button">Perform Evaluation</button>
+                    <button id="ui-evaluate-button" class="ui positive button">Perform Evaluation</button>
                 </div>
             </div>
-
             <br>
 
+
             <!--
-                Predictions
+            Predictions
             -->
             <div class="eight wide column">
                 <div class="ui big header">Predictions</div>
                 <div class="ui segment">
-                    <div class="ui center aligned basic segment">
-                        <div class="ui mini statistic">
-                            <div class="value">
-                                0.78
-                            </div>
-                            <div class="label">
-                                Score threshold
-                            </div>
-                        </div>
-                    </div>
-
                     <h4 class="ui header">
                         Real-Time Prediction
                         <div class="sub header">Generate real-time predictions in your browser.</div>
@@ -314,23 +306,55 @@
                 </div>
             </div>
 
-
         </div>
-
-
     </div>
-
-
 </div>
 </body>
 
 <script>
     $(document).ready(function () {
 
+        const $train_data_rows = $("#ui-train-data-rows-label");
+        const $train_data_cols = $("#ui-train-data-cols-label");
+        const $train_data_size = $("#ui-train-data-size-label");
+        const $test_data_rows = $("#ui-test-data-rows-label");
+        const $test_data_cols = $("#ui-test-data-cols-label");
+        const $test_data_size = $("#ui-test-data-size-label");
+        const $classification_div = $("#ui-classification-div");
+        const $evaluation_message = $("#ui-evaluation-message");
+        const $accuracy_bar = $("#ui-accuracy-bar");
+        const $accuracy = $("#ui-accuracy-label");
+        const $threshold = $("#ui-threshold-label");
+        const $accuracy_statistic = $("#ui-accuracy-statistic");
+
         $('#ui-accuracy-bar').progress({
-            percent: 91
+            percent: 0
         });
 
+        $('#ui-upload-train-data-button').click(function () {
+            $train_data_rows.html('50000');
+            $train_data_cols.html('2');
+            $train_data_size.html('64');
+            $classification_div.show();
+        });
+
+        $('#ui-upload-test-data-button').click(function () {
+            $test_data_rows.html('25000');
+            $test_data_cols.html('1');
+            $test_data_size.html('31');
+        });
+
+        $('#ui-evaluate-button').click(function(){
+            $evaluation_message.show();
+            $accuracy.html('0.91');
+            $threshold.html('0.78');
+            $('#ui-accuracy-bar').progress({
+                percent: 91
+            });
+            $accuracy_bar.addClass('green')
+            $accuracy_statistic.addClass('green');
+        });
+        
     });
 </script>
 
