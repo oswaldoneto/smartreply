@@ -18,7 +18,13 @@ class NewMessageView(View):
             m.save()
             message_ids.append(m.id)
         for id in message_ids:
-            conn = http.client.HTTPConnection('localhost', 8000)
+            http_post = request.environ['HTTP_HOST'].split(':')
+            host = http_post[0]
+            if len(http_post) > 1:
+                port = http_post[1]
+            else:
+                port = 80
+            conn = http.client.HTTPConnection(host, port)
             conn.request('GET', '/processor/message/%s' % id)
 
         return HttpResponse()
