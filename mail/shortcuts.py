@@ -49,12 +49,12 @@ def send(mail_to, subject, substitution):
         ### ---------------------------------------------------------------
         ### Workaround for SSL INVALID CERTIFICATE ON PYTHON 3.6 + MAC OS X
         ###
-        try:
-            _create_unverified_https_context = ssl._create_unverified_context
-        except AttributeError:
-            pass
-        else:
-            ssl._create_default_https_context = _create_unverified_https_context
+        #try:
+        #    _create_unverified_https_context = ssl._create_unverified_context
+        #except AttributeError:
+        #    pass
+        #else:
+        #    ssl._create_default_https_context = _create_unverified_https_context
         ###
         ### Workaround for SSL INVALID CERTIFICATE ON PYTHON 3.6 + MAC OS X
         ### ---------------------------------------------------------------
