@@ -4,7 +4,9 @@ import http.client
 import sys
 from time import sleep
 
-from django.conf import settings
+
+SITE_ENDPOINT = '191.232.184.136'
+SITE_PORT = '80'
 
 
 def main(args):
@@ -14,16 +16,7 @@ def main(args):
         print('30 seconds sleep')
         sleep(30)
 
-
-        site_endpoint = getattr(settings, 'SITE_ENDPOINT', False)
-        site_port = getattr(settings, 'SITE_END_POINT', False)
-        if not site_endpoint :
-            raise Exception('site_endpoint is missing')
-        if not site_port :
-            raise Exception('site_port is missing')
-
-
-        conn = http.client.HTTPConnection(site_endpoint, site_port)
+        conn = http.client.HTTPConnection(SITE_ENDPOINT, SITE_PORT)
 
         print('HTTP GET /exchange/fetchall')
         conn.request('GET', '/exchange/fetchall')
