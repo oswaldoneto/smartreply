@@ -16,18 +16,10 @@
     <!--
     Main Menu
     -->
-    <div class="ui fixed massive pointing menu">
+    <div class="ui inverted fixed massive pointing menu">
         <a class="header item">
             Machine Learning Status
         </a>
-        <div class="right inverted menu">
-            <div class="item">
-                <div class="ui toggle inverted checkbox">
-                    <input type="checkbox" name="public">
-                    <label></label>
-                </div>
-            </div>
-        </div>
     </div>
     <br><br>
 
@@ -345,14 +337,14 @@
         });
 
         $('#ui-evaluate-button').click(function(){
-            //$evaluation_message.show();
-            $accuracy.html('0.33');
+            $evaluation_message.show();
+            $accuracy.html('0.91');
             $threshold.html('0.78');
             $('#ui-accuracy-bar').progress({
-                percent: 33
+                percent: 91
             });
-            $accuracy_bar.addClass('red')
-            $accuracy_statistic.addClass('red');
+            $accuracy_bar.addClass('green')
+            $accuracy_statistic.addClass('green');
         });
         
     });

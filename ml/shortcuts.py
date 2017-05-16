@@ -1,13 +1,18 @@
+import os
 import json
 
 from sklearn.ensemble.forest import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 
+from smartreply.settings import BASE_DIR
+
 
 def predict(text):
 
     # let o dataset
-    with open('/Users/oswaldo/complain.json') as data:
+    dataset_file = os.path.join(BASE_DIR, 'complain.json')
+
+    with open(dataset_file) as data:
         data = json.load(data)
 
     # Get the number of reviews based on the dataframe column size

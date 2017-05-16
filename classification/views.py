@@ -1,16 +1,20 @@
+import os
 import json
 
 from django.views.generic.base import View
 from django.http.response import HttpResponse
 
 from classification.models import Classification
+from smartreply.settings import BASE_DIR
 
 
 class UpdateClassificationView(View):
 
     def get(self, request, *args, **kwargs):
 
-        with open('/Users/oswaldo/complain.json') as data:
+        dataset_file = os.path.join(BASE_DIR, 'complain.json')
+
+        with open(dataset_file) as data:
             data = json.load(data)
 
         problem_list = []
