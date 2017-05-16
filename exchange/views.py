@@ -41,7 +41,7 @@ class FetchAllView(View):
 
             for id in id_list:
 
-                if Message.objects.filter(id=id).count() > 0:
+                if Message.objects.filter(uuid=id).count() > 0:
                     continue
 
                 # pega o email pelo id selecionado
