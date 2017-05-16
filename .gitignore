@@ -82,3 +82,6 @@ media/
 *.sqlite3
 
 .vagrant/
+
+static/
+
