@@ -38,9 +38,14 @@ class MessageView(View):
 
         classification = Classification.objects.filter(name=class_predicted[0]).first()
 
-        template_id = classification.property_set.filter(name='template-id').first().value
+        mail_to = message.property_set.filter(key='Return-Path').first()
 
-        send()
+        substitution = {
+            '<%email_from%>':mail_to.value,
+            '<%email_body%>': text,
+            '<%classification%>': class_predicted[0],
+        }
+        send(mail_to.value, 'Resposta Automática POC Machine Learning', substitution)
 
         return HttpResponse()
 
