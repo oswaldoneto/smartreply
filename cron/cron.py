@@ -16,6 +16,10 @@ def main(args):
         conn = http.client.HTTPConnection('localhost', 8000)
         conn.request('GET', '/exchange/fetchall')
 
+        print('HTTP GET /processor/new')
+        conn = http.client.HTTPConnection('localhost', 8000)
+        conn.request('GET', '/processor/new')
+
 
 if __name__ == '__main__':
     main(sys.argv)

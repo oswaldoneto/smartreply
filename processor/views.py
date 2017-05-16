@@ -14,8 +14,8 @@ class NewMessageView(View):
     def get(self, request, *args, **kwargs):
         message_ids = []
         for m in Message.objects.filter(state=Message.NEW):
-            #m.state = Message.PROCESSING
-            #m.save()
+            m.state = Message.PROCESSING
+            m.save()
             message_ids.append(m.id)
         for id in message_ids:
             conn = http.client.HTTPConnection('localhost', 8000)
@@ -27,7 +27,6 @@ class NewMessageView(View):
 class MessageView(View):
 
     def get(self, request, *args, **kwargs):
-
         message_id = kwargs['id']
 
         message = Message.objects.get(id=message_id)
@@ -41,28 +40,13 @@ class MessageView(View):
         mail_to = message.property_set.filter(key='Return-Path').first()
 
         substitution = {
-            '<%email_from%>':mail_to.value,
-            '<%email_body%>': text,
-            '<%classification%>': class_predicted[0],
+            '%email_from%': mail_to.value[1:len(mail_to.value) - 1],
+            '%email_body%': text,
+            '%classification%': class_predicted[0],
         }
         send(mail_to.value, 'Resposta Automática POC Machine Learning', substitution)
 
+        message.state = Message.TREATED
+        message.save()
+
         return HttpResponse()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

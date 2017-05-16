@@ -52,11 +52,6 @@ class FetchAllView(View):
 
                 # convert raw em objeto
                 email_message = email.message_from_bytes(raw_mail)
-                #email_message = email.message_from_string(raw_mail.decode('utf-8'))
-
-
-                print(email_message.get_payload()[0]._payload)
-
 
                 # persist Email Message
                 message = Message.objects.create(uuid=id, server=server)

@@ -20,8 +20,6 @@ def predict(text):
         clean_train_complain.append(complain['title'])
         target_problem_type.append(complain['category'])
 
-        print(complain['category'])
-
     vectorizer = CountVectorizer(analyzer="word",
                                  tokenizer=None,
                                  preprocessor=None,
