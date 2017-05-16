@@ -10,7 +10,7 @@ from smartreply.settings import BASE_DIR
 def predict(text):
 
     # let o dataset
-    dataset_file = os.path.join(BASE_DIR, 'complain.json')
+    dataset_file = os.path.join(BASE_DIR, 'dataset', 'complain.json')
 
     with open(dataset_file) as data:
         data = json.load(data)
