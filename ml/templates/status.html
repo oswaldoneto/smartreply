@@ -7,7 +7,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <!-- Semantic UI Imports -->
     <link rel="stylesheet" type="text/css" href="{% static 'semantic.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sweetalert.css' %}">
     <script src="{% static 'semantic.min.js' %}"></script>
+    <script src="{% static 'sweetalert.min.js' %}"></script>
 </head>
 <body>
 <div class="ui text container">
@@ -277,7 +279,7 @@
                         <div class="sub header">Generate real-time predictions in your browser.</div>
                     </h4>
                     <div class="ui center aligned basic segment">
-                        <button class="ui button">Real-Time Prediction</button>
+                        <button id="ui-realtime-prediction-button" class="ui button">Real-Time Prediction</button>
                     </div>
 
                     <h4 class="ui header">
@@ -285,7 +287,7 @@
                         <div class="sub header">Generate one-time predictions for a single dataset.</div>
                     </h4>
                     <div class="ui center aligned basic segment">
-                        <button class="ui button">Batch Prediction</button>
+                        <button id="ui-realtime-batch-prediction-button" class="ui button">Batch Prediction</button>
                     </div>
 
                     <h4 class="ui header">
@@ -293,7 +295,7 @@
                         <div class="sub header">To enable real-time predictions as service</div>
                     </h4>
                     <div class="ui center aligned basic segment">
-                        <button class="ui button">Enable Endpoint</button>
+                        <button id="ui-endpoint-prediction-button" class="ui button">Enable Endpoint</button>
                     </div>
                 </div>
             </div>
@@ -301,6 +303,35 @@
         </div>
     </div>
 </div>
+
+
+<!--
+Predictions
+-->
+<div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Real-time Prediction
+    </div>
+    <div class="image content">
+        <div class="description">
+            <div class="ui header">Give us your text and it will be classified</div>
+            <div class="ui form">
+                <div class="field">
+                    <textarea id="ui-text-to-predict-textarea"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <div id="ui-realtime-go-predict-button" class="ui positive right labeled icon button">
+            Predict
+            <i class="umbrella icon"></i>
+        </div>
+    </div>
+</div>
+
+
 </body>
 
 <script>
@@ -346,7 +377,31 @@
             $accuracy_bar.addClass('green')
             $accuracy_statistic.addClass('green');
         });
-        
+
+        $('#ui-realtime-prediction-button').click(function () {
+            $('.ui.modal').modal('show');
+        });
+
+        $('#ui-realtime-go-predict-button').click(function () {
+            var text = $('#ui-text-to-predict-textarea').val();
+            if (text.trim().length == 0) {
+                swal("", "Please submit your text do evaluation", "warning");
+            }
+            else {
+                $.get("/ml/predict", {'text': text}, function (data) {
+                    swal(data.classification, "", "success");
+                });
+            }
+        });
+
+        $('#ui-realtime-batch-prediction-button').click(function(){
+            swal("", "Not available", "warning");
+        });
+
+        $('#ui-endpoint-prediction-button').click(function(){
+            swal("", "Not available", "warning");
+        });
+
     });
 </script>
 
