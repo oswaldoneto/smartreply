@@ -25,7 +25,7 @@ def predict(text):
     clean_train_complain = []
     target_problem_type = []
     for complain in data:
-        clean_train_complain.append(clean_data(complain['complain']))
+        clean_train_complain.append(clean_data('%s %s' % (complain['title'], complain['complain'])))
         target_problem_type.append(complain['category'])
 
     vectorizer = CountVectorizer(analyzer="word",
