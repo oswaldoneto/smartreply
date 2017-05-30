@@ -351,16 +351,16 @@ Predictions
         });
 
         $('#ui-evaluate-button').click(function(){
-            $evaluation_message.show();
             $threshold.html('0.78');
             $accuracy_bar.addClass('yellow')
             $accuracy_statistic.addClass('yellow');
 
-            $.get("/ml/evaluate", {'x':'1'}, function (data) {
+            $.get("/ml/evaluate", {}, function (data) {
                 $('#ui-accuracy-bar').progress({
                     percent: data.accuracy
                 });
                 $accuracy.html(parseFloat(data.accuracy / 100).toFixed(2));
+                $evaluation_message.show();
             });
         });
 
