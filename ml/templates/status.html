@@ -20,7 +20,7 @@
     -->
     <div class="ui inverted fixed massive pointing menu">
         <a class="header item">
-            Machine Learning Status
+            Machine Learning Console
         </a>
     </div>
     <br><br>
@@ -71,7 +71,7 @@
 
                     <h4 class="ui header">
                         Model
-                        <div class="sub header">ML Model Reclame Aqui</div>
+                        <div class="sub header">ML Model Febracorp</div>
                     </h4>
 
                     <h4 class="ui header">
@@ -81,7 +81,7 @@
 
                     <h4 class="ui header">
                         Create At
-                        <div class="sub header">May 1, 2017 9:31:05 PM</div>
+                        <div class="sub header">May 29, 2017 18:31:05 PM</div>
                     </h4>
 
                     <h4 class="ui header">
@@ -130,7 +130,7 @@
                             0
                         </div>
                         <div class="label">
-                            MBytes
+                            KB
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                             0
                         </div>
                         <div class="label">
-                            MBytes
+                            KB
                         </div>
                     </div>
                 </div>
@@ -184,40 +184,7 @@
                     <h4 class="ui header">
                         Classification
                     </h4>
-                    <div class="ui blue labels">
-                        <a class="ui label">
-                            Fun <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Login-Senha <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Cobrança indevida <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Atraso na entrega <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Mau atendimento do prestador de serviço <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Mau Atendimento <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Valor abusivo <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Rematrícula <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Qualidade do serviço prestado <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Demora na execução <i class="icon close"></i>
-                        </a>
-                        <a class="ui label">
-                            Estorno do valor pago <i class="icon close"></i>
-                        </a>
+                    <div id="ui-target-label-list" class="ui blue labels">
                     </div>
                 </div>
 
@@ -231,13 +198,12 @@
         <div class="eight wide column">
             <div class="ui big header">Training ML Model</div>
             <div class="ui segment">
-                <div id="ui-evaluation-message" class="ui positive message" style="display: none">
+                <div id="ui-evaluation-message" class="ui warning message" style="display: none">
                     <i class="close icon"></i>
-                    On your most recent evaluation the ML model's quality score is considered <b>extremely good</b> for
-                    most
-                    machine learning applications.
+                    On your most recent evaluation the ML model's quality score is considered <b>good</b> for
+                    most machine learning applications but accuracy can be improved by data cleanning and bigger datasets.
                 </div>
-                <div id="ui-accuracy-bar" class="ui progress">
+                <div id="ui-accuracy-bar" class="ui warning progress">
                     <div class="bar">
                         <div class="progress"></div>
                     </div>
@@ -349,33 +315,53 @@ Predictions
         const $accuracy = $("#ui-accuracy-label");
         const $threshold = $("#ui-threshold-label");
         const $accuracy_statistic = $("#ui-accuracy-statistic");
+        const $target_label_list = $("#ui-target-label-list");
 
         $('#ui-accuracy-bar').progress({
             percent: 0
         });
 
         $('#ui-upload-train-data-button').click(function () {
-            $train_data_rows.html('50000');
-            $train_data_cols.html('2');
-            $train_data_size.html('64');
+            $.get("/ml/loaddata", {}, function (data) {
+                $train_data_rows.html(data.train_data_rows);
+                $train_data_cols.html('2');
+                $train_data_size.html(data.train_data_size);
+                $test_data_rows.html(data.test_data_rows);
+                $test_data_cols.html('2');
+                $test_data_size.html(data.test_data_size);
+            });
+            $.get("/ml/loadtarget", {}, function (data) {
+                $target_label_list.empty();
+                $.each(data.targets, function(k, v){
+                    $target_label_list.append("<a class='ui label'>" + v + "<i class='icon close'></i></a>");
+                });
+            });
             $classification_div.show();
         });
 
         $('#ui-upload-test-data-button').click(function () {
-            $test_data_rows.html('25000');
-            $test_data_cols.html('1');
-            $test_data_size.html('31');
+            $.get("/ml/loaddata", {}, function (data) {
+                $train_data_rows.html(data.train_data_rows);
+                $train_data_cols.html('2');
+                $train_data_size.html(data.train_data_size);
+                $test_data_rows.html(data.test_data_rows);
+                $test_data_cols.html('2');
+                $test_data_size.html(data.test_data_size);
+            });
         });
 
         $('#ui-evaluate-button').click(function(){
             $evaluation_message.show();
-            $accuracy.html('0.91');
             $threshold.html('0.78');
-            $('#ui-accuracy-bar').progress({
-                percent: 91
+            $accuracy_bar.addClass('yellow')
+            $accuracy_statistic.addClass('yellow');
+
+            $.get("/ml/evaluate", {'x':'1'}, function (data) {
+                $('#ui-accuracy-bar').progress({
+                    percent: data.accuracy
+                });
+                $accuracy.html(parseFloat(data.accuracy / 100).toFixed(2));
             });
-            $accuracy_bar.addClass('green')
-            $accuracy_statistic.addClass('green');
         });
 
         $('#ui-realtime-prediction-button').click(function () {
