@@ -180,7 +180,7 @@ class RespondMessageView(View):
                 if (classification.startswith('Informacao')):
 
                     # envia email de proposta do forum de inteligencia de mercado
-                    send(mail_to, 'Informacao', {}, '5f593f6d-fbfa-4070-a11a-a482f47338b6')
+                    send(mail_to, 'Informacao', {'%MESSAGE_ID%': message_id}, '5f593f6d-fbfa-4070-a11a-a482f47338b6')
 
         # muda o status da mensagem para classificado
         message.state = Message.ANSWERED
