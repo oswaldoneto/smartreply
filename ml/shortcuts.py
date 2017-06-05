@@ -23,6 +23,16 @@ def predict_classification(text):
     return predict(text, os.path.join(BASE_DIR, 'dataset', 'febracorp.csv'))
 
 
+def predict_entrada(text):
+    return predict(text, os.path.join(BASE_DIR, 'dataset', 'entrada.csv'))
+
+
+def predict_cursos(text):
+    return predict(text, os.path.join(BASE_DIR, 'dataset', 'cursos.csv'))
+
+
+
+
 def predict(text, dataset_file_path):
 
     dataset_file = dataset_file_path
