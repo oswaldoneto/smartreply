@@ -4,7 +4,7 @@ from django.http.response import HttpResponse
 from django.views.generic.base import View
 
 from classification.models import Classification
-from crm.models import Campanha
+from crm.models import Campanha, Cliente, Cobranca
 from mail.admin import MessageCampaign
 from mail.models import Message, MessageClassification
 from mail.shortcuts import send
@@ -77,19 +77,41 @@ class ClassifyMessageView(View):
                 new_cls = cls.first()
             MessageClassification.objects.create(message=message, classification=new_cls)
 
+            if entrada_predicted.startswith('Informacao'):
 
-            # Faz a preedição do primeiro contato do usuário
-            curso_predicted = shortcuts.predict_cursos(cleaned_text)
-            curso_predicted = curso_predicted[0]
+                # Faz a preedição do primeiro contato do usuário
+                curso_predicted = shortcuts.predict_cursos(cleaned_text)
+                curso_predicted = curso_predicted[0]
 
-            cls = Classification.objects.filter(name=curso_predicted)
-            if len(cls) == 0:
-                new_cls = Classification.objects.create(name=curso_predicted)
-            else:
-                new_cls = cls.first()
-            MessageClassification.objects.create(message=message, classification=new_cls)
+                cls = Classification.objects.filter(name=curso_predicted)
+                if len(cls) == 0:
+                    new_cls = Classification.objects.create(name=curso_predicted)
+                else:
+                    new_cls = cls.first()
+                MessageClassification.objects.create(message=message, classification=new_cls)
 
+            if entrada_predicted.startswith('Cobranca'):
 
+                # recupera o nome que o email deve ser respondido
+                mail_to = message.property_set.filter(key='Return-Path').first()
+                mail_to = self.__clean_mail_to(mail_to.value)
+
+                clientes = Cliente.objects.filter(email=mail_to)
+
+                if len(clientes) > 0:
+
+                    cliente = clientes.first()
+
+                    cob_abertas = Cobranca.objects.filter(cliente=cliente, pago=False)
+
+                    if len(cob_abertas) > 0:
+
+                        cls = Classification.objects.filter(name='Atraso Pagamento')
+                        if len(cls) == 0:
+                            new_cls = Classification.objects.create(name='Atraso Pagamento')
+                        else:
+                            new_cls = cls.first()
+                        MessageClassification.objects.create(message=message, classification=new_cls)
 
         # muda o status da mensagem para classificado
         message.state = Message.CLASSIFIED
@@ -97,12 +119,21 @@ class ClassifyMessageView(View):
 
         return HttpResponse()
 
+
     def __clean_original_message(self, text):
         cleaned = []
         for line in text.split("\r\n"):
             if not line.startswith(">"):
                 cleaned.append(line)
         return "\r\n".join(cleaned)
+
+
+    def __clean_mail_to(self, mail_to):
+        email = ''
+        for char in mail_to:
+            if char not in " <>":
+                email = '%s%s' % (email, char)
+        return email
 
 
 class NewRespondMessageView(View):
@@ -175,12 +206,24 @@ class RespondMessageView(View):
 
             if len(message.get_classification()) > 0:
 
-                classification = message.get_classification()[0]
+                for classification in message.get_classification():
 
-                if (classification.startswith('Informacao')):
+                    if (classification.startswith('Informacao')):
 
-                    # envia email de proposta do forum de inteligencia de mercado
-                    send(mail_to, 'Informacao', {'%MESSAGE_ID%': message_id}, '5f593f6d-fbfa-4070-a11a-a482f47338b6')
+                        # envia email de proposta do forum de inteligencia de mercado
+                        send(mail_to, 'Informacao', {'%MESSAGE_ID%': message_id}, '5f593f6d-fbfa-4070-a11a-a482f47338b6')
+
+                    if (classification.startswith('Cobranca')):
+
+                        if 'Atraso Pagamento' in message.get_classification():
+
+                            subs = {'%NOME%': message_id,
+                                    '%BOLETO%': message_id, '%VALOR%': message_id, }
+
+                            # envia email de proposta do forum de inteligencia de mercado
+                            send(mail_to, 'Solicitação de Informação de Cobrança', subs,
+                                 '9bb4f51b-f961-456a-afc8-360db0eb8db6')
+
 
         # muda o status da mensagem para classificado
         message.state = Message.ANSWERED

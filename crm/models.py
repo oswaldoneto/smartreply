@@ -9,3 +9,17 @@ class Campanha(models.Model):
         return self.name
 
 
+class Cliente(models.Model):
+    nome = models.CharField(max_length=255)
+    fone = models.CharField(max_length=25)
+    email = models.EmailField()
+
+
+class Cobranca(models.Model):
+    cliente = models.ForeignKey(Cliente)
+    boleto = models.CharField(max_length=50)
+    pago = models.BooleanField()
+    valor = models.CharField(max_length=50)
+
+
+
