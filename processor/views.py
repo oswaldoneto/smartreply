@@ -217,12 +217,19 @@ class RespondMessageView(View):
 
                         if 'Atraso Pagamento' in message.get_classification():
 
-                            subs = {'%NOME%': message_id,
-                                    '%BOLETO%': message_id, '%VALOR%': message_id, }
+                            clientes = Cliente.objects.filter(email=mail_to)
+                            if len(clientes) > 0:
+                                cliente = clientes.first()
+                                cob_abertas = Cobranca.objects.filter(cliente=cliente, pago=False)
 
-                            # envia email de proposta do forum de inteligencia de mercado
-                            send(mail_to, 'Solicitação de Informação de Cobrança', subs,
-                                 '9bb4f51b-f961-456a-afc8-360db0eb8db6')
+                                if len(cob_abertas) > 0:
+
+                                    subs = {'%NOME%': cliente.nome,
+                                            '%BOLETO%': cob_abertas.boleto, '%VALOR%': cob_abertas.valor, }
+
+                                    # envia email de proposta do forum de inteligencia de mercado
+                                    send(mail_to, 'Solicitação de Informação de Cobrança', subs,
+                                         '9bb4f51b-f961-456a-afc8-360db0eb8db6')
 
 
         # muda o status da mensagem para classificado
