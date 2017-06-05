@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+{% load humanize %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartReply</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- Semantic UI Imports -->
+    <link rel="stylesheet" type="text/css" href="{% static 'semantic.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sweetalert.css' %}">
+    <script src="{% static 'semantic.min.js' %}"></script>
+    <script src="{% static 'sweetalert.min.js' %}"></script>
+</head>
+<body>
+<div class="ui container">
+
+
+    <!--
+    Main Menu
+    -->
+    <div class="ui inverted fixed massive pointing menu">
+        <a class="header item">
+            Message Board
+        </a>
+    </div>
+
+    <br><br><br><br>
+
+
+    <div class="ui four column doubling stackable grid container">
+        <div class="column">
+            <h4 class="ui horizontal divider header">
+                Caixa de Entrada
+            </h4>
+            <div class="ui one stackable cards">
+                {% for msg in new_messages %}
+                <div class="ui orange card">
+                    <div class="content">
+                        <div class="right floated meta">{{msg.time|naturaltime}}</div>
+                        {{msg.get_from}}
+                    </div>
+                    <div class="content">
+                        <h4 class="ui sub header">{{msg.get_subject}}</h4>
+                        <div>
+                            {{msg.get_body|truncatechars:255}}
+                        </div>
+                    </div>
+                    {% if msg.get_campaign %}
+                    <div class="extra content">
+                        <i class="announcement icon"></i>
+                        {{ msg.get_campaign }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="column">
+            <h4 class="ui horizontal divider header">
+                Classificados
+            </h4>
+            <div class="ui one stackable cards">
+                {% for msg in classified_messages %}
+                <div class="ui blue card">
+                    <div class="content">
+                        <div class="right floated meta">{{msg.time|naturaltime}}</div>
+                        {{msg.get_from}}
+                    </div>
+                    <div class="content">
+                        <h4 class="ui sub header">{{msg.get_subject}}</h4>
+                        <div>
+                            {{msg.get_body|truncatechars:155}}
+                        </div>
+                    </div>
+                    {% if msg.get_campaign %}
+                        <div class="extra content">
+                            <i class="announcement icon"></i>
+                            {{ msg.get_campaign }}
+                        </div>
+                    {% endif %}
+                    <div class="extra content">
+                        {% for cls in msg.get_classification %}
+                            <i class="tag icon"></i>
+                            {{ cls }}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="column">
+            <h4 class="ui horizontal divider header">
+                Respostas
+            </h4>
+            <div class="ui one stackable cards">
+                {% for msg in answered_messages %}
+                <div class="ui green card">
+                    <div class="content">
+                        <div class="right floated meta">{{msg.time|naturaltime}}</div>
+                        {{msg.get_from}}
+                    </div>
+                    <div class="content">
+                        <h4 class="ui sub header">{{msg.get_subject}}</h4>
+                        <div>
+                            {{msg.get_body|truncatechars:155}}
+                        </div>
+                    </div>
+                    {% if msg.get_campaign %}
+                        <div class="extra content">
+                            <i class="announcement icon"></i>
+                            {{ msg.get_campaign }}
+                        </div>
+                    {% endif %}
+                    <div class="extra content">
+                        {% for cls in msg.get_classification %}
+                            <i class="tag icon"></i>
+                            {{ cls }}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="column">
+            <h4 class="ui horizontal divider header">
+                Falha na Entrega
+            </h4>
+            <div class="ui one stackable cards">
+                {% for msg in failure_messages %}
+                <div class="ui red card">
+                    <div class="content">
+                        <div class="right floated meta">{{msg.time|naturaltime}}</div>
+                        {{msg.get_from}}
+                    </div>
+                    <div class="content">
+                        <h4 class="ui sub header">{{msg.get_subject}}</h4>
+                        <div>
+                            {{msg.get_body|truncatechars:155}}
+                        </div>
+                    </div>
+                    {% if msg.get_campaign %}
+                        <div class="extra content">
+                            <i class="announcement icon"></i>
+                            {{ msg.get_campaign }}
+                        </div>
+                    {% endif %}
+                    <div class="extra content">
+                        {% for cls in msg.get_classification %}
+                            <i class="tag icon"></i>
+                            {{ cls }}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="ui dimmer">
+    <div class="ui small text loader">Aguarde...</div>
+</div>
+
+
+</body>
+
+<script>
+    $(document).ready(function () {
+
+
+    });
+</script>
+
+</html>

@@ -7,11 +7,10 @@ from sendgrid.helpers.mail.mail import Mail, Personalization, Email, Content, Su
 ENV_SENDGRID_KEY = 'SENDGRID_API_KEY'
 
 FROM = 'poc.febracorp@gmail.com'
-TEMPLATE_ID = '3f5d7b21-aea4-4ca5-bda3-ddbd08e5f025'
-BCCS = ['oswaldo.neto@gmail.com', ]
+BCCS = []
 
 
-def send(mail_to, subject, substitution):
+def send(mail_to, subject, substitution, template_id):
 
     def prepare_data():
 
@@ -21,7 +20,7 @@ def send(mail_to, subject, substitution):
 
         mail.set_subject(subject)
 
-        mail.set_template_id(TEMPLATE_ID)
+        mail.set_template_id(template_id)
 
         personalization = Personalization()
 
@@ -37,7 +36,8 @@ def send(mail_to, subject, substitution):
 
         mail.add_personalization(personalization)
 
-        mail.add_content(Content("text/html", " "))
+        mail.add_content(Content("text/plain", "some text here"))
+        mail.add_content(Content("text/html", "<html><body>some text here</body></html>"))
 
         return mail.get()
 
@@ -49,12 +49,12 @@ def send(mail_to, subject, substitution):
         ### ---------------------------------------------------------------
         ### Workaround for SSL INVALID CERTIFICATE ON PYTHON 3.6 + MAC OS X
         ###
-        #try:
-        #    _create_unverified_https_context = ssl._create_unverified_context
-        #except AttributeError:
-        #    pass
-        #else:
-        #    ssl._create_default_https_context = _create_unverified_https_context
+        try:
+            _create_unverified_https_context = ssl._create_unverified_context
+        except AttributeError:
+            pass
+        else:
+            ssl._create_default_https_context = _create_unverified_https_context
         ###
         ### Workaround for SSL INVALID CERTIFICATE ON PYTHON 3.6 + MAC OS X
         ### ---------------------------------------------------------------
@@ -67,6 +67,8 @@ def send(mail_to, subject, substitution):
 
         # api send call
         response = sg.client.mail.send.post(request_body=data)
+
+        print(response)
 
     except Exception as e:
         raise e

@@ -2,6 +2,8 @@ import json
 
 from django.http.response import HttpResponse
 from django.views.generic.base import TemplateView
+
+from classification.models import Classification
 from ml import shortcuts
 
 
@@ -10,7 +12,7 @@ class StatusView(TemplateView):
 
 
 def predict_view(request):
-    data = {'classification': shortcuts.predict(request.GET['text'])[0]}
+    data = {'classification': shortcuts.predict_classification(request.GET['text'])[0]}
     return HttpResponse(json.dumps(data), content_type='application/json')
 
 
@@ -32,10 +34,20 @@ def load_data(request):
 
 
 def load_targets(request):
+    targets = list(set(shortcuts.load_targets()))
+    save_targets(targets)
     data = {
-        'targets': list(set(shortcuts.load_targets()))
+        'targets': targets
     }
     return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+def save_targets(targets):
+    for t in targets:
+        Classification.objects.update_or_create(name=t)
+
+
+
 
 
 

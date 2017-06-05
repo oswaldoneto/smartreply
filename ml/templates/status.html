@@ -207,7 +207,6 @@
                     <div class="bar">
                         <div class="progress"></div>
                     </div>
-                    <div class="label">AUC</div>
                 </div>
                 <div class="ui center aligned basic segment">
                     <div id="ui-accuracy-statistic" class="ui mini statistic">
@@ -297,6 +296,10 @@ Predictions
     </div>
 </div>
 
+<div class="ui dimmer">
+    <div class="ui small text loader">Aguarde...</div>
+</div>
+
 
 </body>
 
@@ -316,6 +319,7 @@ Predictions
         const $threshold = $("#ui-threshold-label");
         const $accuracy_statistic = $("#ui-accuracy-statistic");
         const $target_label_list = $("#ui-target-label-list");
+        const $dimmer = $(".ui.dimmer");
 
         $('#ui-accuracy-bar').progress({
             percent: 0
@@ -351,7 +355,10 @@ Predictions
         });
 
         $('#ui-evaluate-button').click(function(){
-            $threshold.html('0.78');
+
+            $dimmer.dimmer('show');
+
+            $threshold.html('0.5');
             $accuracy_bar.addClass('yellow')
             $accuracy_statistic.addClass('yellow');
 
@@ -360,6 +367,9 @@ Predictions
                     percent: data.accuracy
                 });
                 $accuracy.html(parseFloat(data.accuracy / 100).toFixed(2));
+
+                $dimmer.dimmer('hide');
+
                 $evaluation_message.show();
             });
         });

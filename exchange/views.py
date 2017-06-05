@@ -38,7 +38,6 @@ class FetchAllView(View):
             # quebra a lista de ids
             id_list = ids.split()
 
-
             for id in id_list:
 
                 if Message.objects.filter(uuid=id).count() > 0:

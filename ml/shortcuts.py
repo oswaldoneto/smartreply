@@ -1,7 +1,9 @@
+import difflib
 import os
 import json
 import re
 import csv
+import urllib
 
 from unicodedata import normalize
 
@@ -13,10 +15,17 @@ from nltk.corpus import stopwords
 from smartreply.settings import BASE_DIR
 
 
+def calculate_similarity(text1, text2):
+    return difflib.SequenceMatcher(a=clean_data(text1), b=clean_data(text2)).ratio() > 0.7
 
-def predict(text):
 
-    dataset_file = os.path.join(BASE_DIR, 'dataset', 'febracorp.csv')
+def predict_classification(text):
+    return predict(text, os.path.join(BASE_DIR, 'dataset', 'febracorp.csv'))
+
+
+def predict(text, dataset_file_path):
+
+    dataset_file = dataset_file_path
 
     data_file = open(dataset_file, 'r')
 

@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^processor/', include('processor.urls')),
     url(r'^ml/', include('ml.urls')),
     url(r'^classification/', include('classification.urls')),
+    url(r'^mail/', include('mail.urls')),
 ]

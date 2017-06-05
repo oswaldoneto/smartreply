@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'exchange',
     'classification',
     'ml',
+    'crm',
+    'django.contrib.humanize',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
