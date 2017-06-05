@@ -225,7 +225,7 @@ class RespondMessageView(View):
                                 if len(cob_abertas) > 0:
 
                                     subs = {'%NOME%': cliente.nome,
-                                            '%BOLETO%': cob_abertas.boleto, '%VALOR%': cob_abertas.valor, }
+                                            '%BOLETO%': cob_abertas[0].boleto, '%VALOR%': cob_abertas[0].valor }
 
                                     # envia email de proposta do forum de inteligencia de mercado
                                     send(mail_to, 'Solicitação de Informação de Cobrança', subs,

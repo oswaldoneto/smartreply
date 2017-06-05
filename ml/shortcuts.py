@@ -16,7 +16,7 @@ from smartreply.settings import BASE_DIR
 
 
 def calculate_similarity(text1, text2):
-    return difflib.SequenceMatcher(a=clean_data(text1), b=clean_data(text2)).ratio() > 0.7
+    return difflib.SequenceMatcher(a=clean_data(text1), b=clean_data(text2)).ratio() > 0.5
 
 
 def predict_classification(text):
